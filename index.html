@@ -481,6 +481,13 @@ a:hover {
         <div class="overall-score" id="overallScore">Overall Score: 0</div>
 
         <canvas id="barChart"></canvas>
+<div style="text-align: center; margin-top: 30px;">
+  <p style="font-weight: bold; font-size: 16px; max-width: 600px; margin: 0 auto 15px;">
+    Would you like our team to connect with you to explore ways to enhance your school's sports environment and improve your Sports Index score?
+  </p>
+  <button onclick="handleConnectResponse('Yes')" style="background-color: #28a745; color: white; padding: 10px 20px; margin: 10px; border: none; border-radius: 6px;">Yes</button>
+  <button onclick="handleConnectResponse('No')" style="background-color: #dc3545; color: white; padding: 10px 20px; margin: 10px; border: none; border-radius: 6px;">No</button>
+</div>
 
 	<p style="font-weight: bold; font-size: 16px; text-align: center; margin-top: 20px;">
     Want to boost your School Sports Index scores and provide an enhanced experience for your students? 
@@ -583,6 +590,7 @@ const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
 
 
     function calculateScore() {
+	let connectWithUsAnswer = window.connectResponse || "Not answered";
     // Double check required inputs before proceeding
     const name = document.getElementById('respondentName').value.trim();
     const designation = document.getElementById('designation').value.trim();
@@ -742,7 +750,10 @@ let postData = {
   structuredCurriculum: structuredCurriculumData.text,
   propsEquipmentRatio: propsEquipmentRatioData.text,
 
-  overallScore: overallScore.toFixed(2)
+  overallScore: overallScore.toFixed(2),
+
+  connectWithUs: connectWithUsAnswer
+
 };
 
 
@@ -751,15 +762,6 @@ let postData = {
 let formBody = Object.keys(postData).map(key => 
   encodeURIComponent(key) + '=' + encodeURIComponent(postData[key])
 ).join('&');
-
-fetch("https://script.google.com/macros/s/AKfycbz1TrYCZccmpiv1wAnvdTZGHy8VA5IopuMx71oa1xPW_so01ZZLwA6ohZ4vJS0EUymx/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(postData)
-});
-
 
 // Send to Google Apps Script Web App
 fetch("https://script.google.com/macros/s/AKfycby-jP0qQt5F94TUcgSJAZlZ-sdWNyVNjx23yn2j47aFiP_W1KRfrOscHy92qk59C02-/exec", {
@@ -865,6 +867,13 @@ if (facilitator < 40) {
         document.getElementById('summaryNeutralContent').innerText = 
             "The sports program structure and resources are fair, but minor improvements in curriculum planning and resource allocation could improve effectiveness.";
     }
+}
+function handleConnectResponse(answer) {
+  if (answer === 'Yes') {
+    alert("Thank you! Our team will reach out to you shortly to assist in enhancing your school's sports program.");
+  } else {
+    alert("Thank you for your response! Feel free to reach out whenever you're ready.");
+  }
 }
 
 
