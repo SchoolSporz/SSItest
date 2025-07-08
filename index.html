@@ -615,11 +615,12 @@ const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
 
 	// Calculate scores for each parameter (Converted to 100 scale)
 
-	let timeForSports = (peSessionsData.value * 0.75 + afterSchoolStudentsData.value * 0.25) * 20;
-let spaceForSports = (sectionsData.value * 0.75 + sportsData.value * 0.25) * 20;
-let child = (studentFeedbackData.value * 0.5 + interSchoolParticipationData.value * 0.5) * 20;
-let facilitator = (peTeacherRatioData.value * 0.5 + peReportingFrequencyData.value * 0.5) * 20;
-let content = (structuredCurriculumData.value * 0.75 + propsEquipmentRatioData.value * 0.25) * 20;
+	let timeForSports = (peSessions * 0.75 + afterSchoolStudents * 0.25) * 20;
+let spaceForSports = (sections * 0.75 + sports * 0.25) * 20;
+let child = (studentFeedback * 0.5 + interSchoolParticipation * 0.5) * 20;
+let facilitator = (peTeacherRatio * 0.5 + peReportingFrequency * 0.5) * 20;
+let content = (structuredCurriculum * 0.75 + propsEquipmentRatio * 0.25) * 20;
+
 
 
 
