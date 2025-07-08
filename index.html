@@ -888,11 +888,15 @@ function handleConnectResponse(answer) {
     const name = document.getElementById('respondentName').value.trim();
     const school = document.getElementById('schoolName').value.trim();
     const email = document.getElementById('email').value.trim();
+const city = document.getElementById('city').value.trim();
+    const contact = document.getElementById('contactNumber').value.trim();
 
     const data = {
       respondentName: name,
       schoolName: school,
       email: email,
+      city: city,
+      contactNumber: contact,
       connectWithUs: answer
     };
 
