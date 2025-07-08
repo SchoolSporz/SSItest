@@ -734,8 +734,6 @@ maintainAspectRatio: false,
         // Generate summaries
         generateSummaries(timeForSports, spaceForSports, child, facilitator, content);
 
-let connectWithUsAnswer = confirm("Would you like our team to connect with you to enhance your school's sports environment?") ? "Yes" : "No";
-
 // Prepare data to send
 let postData = {
   respondentName: name,
@@ -757,6 +755,7 @@ let postData = {
   propsEquipmentRatio: propsEquipmentRatioData.text,
 
   overallScore: overallScore.toFixed(2),
+
   connectWithUs: connectWithUsAnswer
 
 };
@@ -864,7 +863,13 @@ if (facilitator < 40) {
             "The sports program structure and resources are fair, but minor improvements in curriculum planning and resource allocation could improve effectiveness.";
     }
 }
-
+function handleConnectResponse(answer) {
+  if (answer === 'Yes') {
+    alert("Thank you! Our team will reach out to you shortly to assist in enhancing your school's sports program.");
+  } else {
+    alert("Thank you for your response! Feel free to reach out whenever you're ready.");
+  }
+}
 
 
 </script>
