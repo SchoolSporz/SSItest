@@ -546,16 +546,25 @@ a:hover {
     const email = document.getElementById('email').value.trim();
     const contact = document.getElementById('contactNumber').value.trim();
 
-    const peSessions = document.getElementById('peSessions').value;
-    const afterSchoolStudents = document.getElementById('afterSchoolStudents').value;
-    const sections = document.getElementById('sections').value;
-    const sports = document.getElementById('sports').value;
-    const studentFeedback = document.getElementById('studentFeedback').value;
-    const interSchoolParticipation = document.getElementById('interSchoolParticipation').value;
-    const peTeacherRatio = document.getElementById('peTeacherRatio').value;
-    const peReportingFrequency = document.getElementById('peReportingFrequency').value;
-    const structuredCurriculum = document.getElementById('structuredCurriculum').value;
-    const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').value;
+    function getValueAndText(id) {
+  const el = document.getElementById(id);
+  return {
+    value: el.value,
+    text: el.options[el.selectedIndex].text
+  };
+}
+
+const peSessionsData = getValueAndText('peSessions');
+const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
+const sectionsData = getValueAndText('sections');
+const sportsData = getValueAndText('sports');
+const studentFeedbackData = getValueAndText('studentFeedback');
+const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
+const peTeacherRatioData = getValueAndText('peTeacherRatio');
+const peReportingFrequencyData = getValueAndText('peReportingFrequency');
+const structuredCurriculumData = getValueAndText('structuredCurriculum');
+const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
+
 
     const calcBtn = document.getElementById('calcBtn');
 
@@ -581,16 +590,16 @@ a:hover {
     const email = document.getElementById('email').value.trim();
     const contact = document.getElementById('contactNumber').value.trim();
 
-    const peSessions = document.getElementById('peSessions').options[document.getElementById('peSessions').selectedIndex].text;
-const afterSchoolStudents = document.getElementById('afterSchoolStudents').options[document.getElementById('afterSchoolStudents').selectedIndex].text;
-const sections = document.getElementById('sections').options[document.getElementById('sections').selectedIndex].text;
-const sports = document.getElementById('sports').options[document.getElementById('sports').selectedIndex].text;
-const studentFeedback = document.getElementById('studentFeedback').options[document.getElementById('studentFeedback').selectedIndex].text;
-const interSchoolParticipation = document.getElementById('interSchoolParticipation').options[document.getElementById('interSchoolParticipation').selectedIndex].text;
-const peTeacherRatio = document.getElementById('peTeacherRatio').options[document.getElementById('peTeacherRatio').selectedIndex].text;
-const peReportingFrequency = document.getElementById('peReportingFrequency').options[document.getElementById('peReportingFrequency').selectedIndex].text;
-const structuredCurriculum = document.getElementById('structuredCurriculum').options[document.getElementById('structuredCurriculum').selectedIndex].text;
-const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').options[document.getElementById('propsEquipmentRatio').selectedIndex].text;
+    const peSessions = document.getElementById('peSessions').value;
+    const afterSchoolStudents = document.getElementById('afterSchoolStudents').value;
+    const sections = document.getElementById('sections').value;
+    const sports = document.getElementById('sports').value;
+    const studentFeedback = document.getElementById('studentFeedback').value;
+    const interSchoolParticipation = document.getElementById('interSchoolParticipation').value;
+    const peTeacherRatio = document.getElementById('peTeacherRatio').value;
+    const peReportingFrequency = document.getElementById('peReportingFrequency').value;
+    const structuredCurriculum = document.getElementById('structuredCurriculum').value;
+    const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').value;
 
     // If any field is empty — alert user
     if (
@@ -605,20 +614,12 @@ const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').optio
 
 	// Calculate scores for each parameter (Converted to 100 scale)
 
-	// Time for Sports (75% PE sessions, 25% After School students)
-	let timeForSports = (peSessions * 0.75 + afterSchoolStudents * 0.25) * 20;
+	let timeForSports = (peSessionsData.value * 0.75 + afterSchoolStudentsData.value * 0.25) * 20;
+let spaceForSports = (sectionsData.value * 0.75 + sportsData.value * 0.25) * 20;
+let child = (studentFeedbackData.value * 0.5 + interSchoolParticipationData.value * 0.5) * 20;
+let facilitator = (peTeacherRatioData.value * 0.5 + peReportingFrequencyData.value * 0.5) * 20;
+let content = (structuredCurriculumData.value * 0.75 + propsEquipmentRatioData.value * 0.25) * 20;
 
-	// Space for Sports (75% Sections, 25% Sports)
-	let spaceForSports = (sections * 0.75 + sports * 0.25) * 20;
-
-	// Child (50% Student Feedback/Achievements, 50% Inter School Participation)
-	let child = (studentFeedback * 0.5 + interSchoolParticipation * 0.5) * 20;
-
-	// Facilitator (50% PE Teacher Ratio, 50% reporting/Parent Feedback)
-	let facilitator = (peTeacherRatio * 0.5 + peReportingFrequency * 0.5) * 20;
-
-	// Content (75% Structured Curriculum, 25% Props & Equipment Ratio)
-	let content = (structuredCurriculum * 0.75 + propsEquipmentRatio * 0.25) * 20;
 
 
         // Calculate overall score out of 100
@@ -727,16 +728,18 @@ let postData = {
   city: city,
   email: email,
   contactNumber: contact,
-  peSessions: peSessions,
-  afterSchoolStudents: afterSchoolStudents,
-  sections: sections,
-  sports: sports,
-  studentFeedback: studentFeedback,
-  interSchoolParticipation: interSchoolParticipation,
-  peTeacherRatio: peTeacherRatio,
-  peReportingFrequency: peReportingFrequency,
-  structuredCurriculum: structuredCurriculum,
-  propsEquipmentRatio: propsEquipmentRatio,
+
+  peSessions: peSessionsData.text,
+  afterSchoolStudents: afterSchoolStudentsData.text,
+  sections: sectionsData.text,
+  sports: sportsData.text,
+  studentFeedback: studentFeedbackData.text,
+  interSchoolParticipation: interSchoolParticipationData.text,
+  peTeacherRatio: peTeacherRatioData.text,
+  peReportingFrequency: peReportingFrequencyData.text,
+  structuredCurriculum: structuredCurriculumData.text,
+  propsEquipmentRatio: propsEquipmentRatioData.text,
+
   overallScore: overallScore.toFixed(2)
 };
 
