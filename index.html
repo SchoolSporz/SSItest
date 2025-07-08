@@ -887,5 +887,35 @@ function handleConnectResponse(answer) {
 
 </script>
 
+<script>
+  function submitConnectResponse(answer) {
+    const name = document.getElementById('respondentName').value.trim();
+    const school = document.getElementById('schoolName').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    const data = {
+      respondentName: name,
+      schoolName: school,
+      email: email,
+      connectWithUs: answer
+    };
+
+    const formBody = Object.keys(data).map(key =>
+      encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+    ).join("&");
+
+    fetch("https://script.google.com/macros/s/AKfycbwJ0rDWgk66C6vzJGXUK_jlq9LtIBS-Z9UtCImgEgMv_kC0CgJ5oSlkCUwMUVCooQVFaA/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formBody
+    });
+
+    alert(answer === 'Yes'
+      ? "Thanks! Our team will reach out to you shortly."
+      : "Thanks for your response!");
+  }
+</script>
+
+
 </body>
 </html>
