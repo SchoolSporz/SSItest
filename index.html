@@ -599,8 +599,7 @@ const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
 }
 
 
-    function calculateScore() {
-    // Double check required inputs before proceeding
+function calculateScore() {
     const name = document.getElementById('respondentName').value.trim();
     const designation = document.getElementById('designation').value.trim();
     const school = document.getElementById('schoolName').value.trim();
@@ -608,44 +607,47 @@ const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
     const email = document.getElementById('email').value.trim();
     const contact = document.getElementById('contactNumber').value.trim();
 
-    const peSessions = document.getElementById('peSessions').value;
-    const afterSchoolStudents = document.getElementById('afterSchoolStudents').value;
-    const sections = document.getElementById('sections').value;
-    const sports = document.getElementById('sports').value;
-    const studentFeedback = document.getElementById('studentFeedback').value;
-    const interSchoolParticipation = document.getElementById('interSchoolParticipation').value;
-    const peTeacherRatio = document.getElementById('peTeacherRatio').value;
-    const peReportingFrequency = document.getElementById('peReportingFrequency').value;
-    const structuredCurriculum = document.getElementById('structuredCurriculum').value;
-    const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').value;
+    const getValueAndText = (id) => {
+        const el = document.getElementById(id);
+        return {
+            value: Number(el.value),
+            text: el.options[el.selectedIndex]?.text || ""
+        };
+    };
 
-    // If any field is empty — alert user
+    const peSessionsData = getValueAndText('peSessions');
+    const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
+    const sectionsData = getValueAndText('sections');
+    const sportsData = getValueAndText('sports');
+    const studentFeedbackData = getValueAndText('studentFeedback');
+    const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
+    const peTeacherRatioData = getValueAndText('peTeacherRatio');
+    const peReportingFrequencyData = getValueAndText('peReportingFrequency');
+    const structuredCurriculumData = getValueAndText('structuredCurriculum');
+    const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
+
+    // Validate again (optional)
     if (
         !name || !designation || !school || !city || !email || !contact ||
-        !peSessions || !afterSchoolStudents || !sections || !sports ||
-        !studentFeedback || !interSchoolParticipation || !peTeacherRatio ||
-        !peReportingFrequency || !structuredCurriculum || !propsEquipmentRatio
+        !peSessionsData.value || !afterSchoolStudentsData.value || !sectionsData.value ||
+        !sportsData.value || !studentFeedbackData.value || !interSchoolParticipationData.value ||
+        !peTeacherRatioData.value || !peReportingFrequencyData.value ||
+        !structuredCurriculumData.value || !propsEquipmentRatioData.value
     ) {
-        alert("Please fill out all fields before calculating the score.");
-        return; // stop function execution
+        alert("Please fill all fields before calculating score.");
+        return;
     }
 
-	// Calculate scores for each parameter (Converted to 100 scale)
+    // Calculate scores
+    let timeForSports = (peSessionsData.value * 0.75 + afterSchoolStudentsData.value * 0.25) * 20;
+    let spaceForSports = (sectionsData.value * 0.75 + sportsData.value * 0.25) * 20;
+    let child = (studentFeedbackData.value * 0.5 + interSchoolParticipationData.value * 0.5) * 20;
+    let facilitator = (peTeacherRatioData.value * 0.5 + peReportingFrequencyData.value * 0.5) * 20;
+    let content = (structuredCurriculumData.value * 0.75 + propsEquipmentRatioData.value * 0.25) * 20;
 
-	let timeForSports = (peSessions * 0.75 + afterSchoolStudents * 0.25) * 20;
-let spaceForSports = (sections * 0.75 + sports * 0.25) * 20;
-let child = (studentFeedback * 0.5 + interSchoolParticipation * 0.5) * 20;
-let facilitator = (peTeacherRatio * 0.5 + peReportingFrequency * 0.5) * 20;
-let content = (structuredCurriculum * 0.75 + propsEquipmentRatio * 0.25) * 20;
+    let overallScore = (timeForSports + spaceForSports + child + facilitator + content) / 5;
 
-
-
-
-        // Calculate overall score out of 100
-        let overallScore = (timeForSports + spaceForSports + child + facilitator + content) / 5;
-
-        // Display overall score
-        document.getElementById('overallScore').innerText = `Overall Score: ${overallScore.toFixed(2)}`;
+    document.getElementById('overallScore').innerText = `Overall Score: ${overallScore.toFixed(2)}`;
 
         // Prepare data for radar chart
         let labels = ["Time for Sports", "Space for Sports", "Child", "Facilitator", "Content"];
@@ -740,56 +742,51 @@ maintainAspectRatio: false,
         generateSummaries(timeForSports, spaceForSports, child, facilitator, content);
 
 // Prepare data to send
-let postData = {
-  respondentName: name,
-  designation: designation,
-  schoolName: school,
-  city: city,
-  email: email,
-  contactNumber: contact,
+ let postData = {
+        respondentName: name,
+        designation: designation,
+        schoolName: school,
+        city: city,
+        email: email,
+        contactNumber: contact,
 
-  peSessions: peSessionsData.text,
-  afterSchoolStudents: afterSchoolStudentsData.text,
-  sections: sectionsData.text,
-  sports: sportsData.text,
-  studentFeedback: studentFeedbackData.text,
-  interSchoolParticipation: interSchoolParticipationData.text,
-  peTeacherRatio: peTeacherRatioData.text,
-  peReportingFrequency: peReportingFrequencyData.text,
-  structuredCurriculum: structuredCurriculumData.text,
-  propsEquipmentRatio: propsEquipmentRatioData.text,
+        peSessions: peSessionsData.text,
+        afterSchoolStudents: afterSchoolStudentsData.text,
+        sections: sectionsData.text,
+        sports: sportsData.text,
+        studentFeedback: studentFeedbackData.text,
+        interSchoolParticipation: interSchoolParticipationData.text,
+        peTeacherRatio: peTeacherRatioData.text,
+        peReportingFrequency: peReportingFrequencyData.text,
+        structuredCurriculum: structuredCurriculumData.text,
+        propsEquipmentRatio: propsEquipmentRatioData.text,
 
-  overallScore: overallScore.toFixed(2)
-};
+        overallScore: overallScore.toFixed(2)
+    };
 
+    // Convert to x-www-form-urlencoded format
+    let formBody = Object.keys(postData).map(key =>
+        encodeURIComponent(key) + '=' + encodeURIComponent(postData[key])
+    ).join('&');
 
-
-// Convert your postData object into URL-encoded string
-let formBody = Object.keys(postData).map(key => 
-  encodeURIComponent(key) + '=' + encodeURIComponent(postData[key])
-).join('&');
-
-
-// Send to Google Apps Script Web App
-fetch("https://script.google.com/macros/s/AKfycbwJ0rDWgk66C6vzJGXUK_jlq9LtIBS-Z9UtCImgEgMv_kC0CgJ5oSlkCUwMUVCooQVFaA/exec", {
-  method: "POST",
-  body: formBody,
-  headers: { "Content-Type": "application/x-www-form-urlencoded" }
-})
-
-.then(response => {
-  if (response.ok) {
-    alert("Your response has been submitted to the sheet!");
-  } else {
-    alert("There was a problem submitting your response.");
-  }
-})
-.catch(error => {
-  console.error("Error:", error);
-  alert("An error occurred while submitting.");
-});
-
-    }
+    // Send to Google Apps Script
+    fetch("https://script.google.com/macros/s/AKfycbwJ0rDWgk66C6vzJGXUK_jlq9LtIBS-Z9UtCImgEgMv_kC0CgJ5oSlkCUwMUVCooQVFaA/exec", {
+        method: "POST",
+        body: formBody,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Your response has been submitted to the sheet!");
+        } else {
+            alert("There was a problem submitting your response.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while submitting.");
+    });
+}
 
     function clearSummaries() {
         // Clear previous positive, neutral, and negative summaries
