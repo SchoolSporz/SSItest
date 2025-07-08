@@ -548,10 +548,11 @@ a:hover {
 
     function getValueAndText(id) {
   const el = document.getElementById(id);
-  return {
-    value: el.value,
-    text: el.options[el.selectedIndex].text
-  };
+return {
+  value: Number(el.value),  // Convert string to number
+  text: el.options[el.selectedIndex].text
+};
+
 }
 
 const peSessionsData = getValueAndText('peSessions');
