@@ -886,6 +886,7 @@ function handleConnectResponse(answer) {
 <script>
   function submitConnectResponse(answer) {
     const name = document.getElementById('respondentName').value.trim();
+    const designation = document.getElementById('designation').value.trim();
     const school = document.getElementById('schoolName').value.trim();
     const email = document.getElementById('email').value.trim();
 const city = document.getElementById('city').value.trim();
@@ -893,6 +894,7 @@ const city = document.getElementById('city').value.trim();
 
     const data = {
       respondentName: name,
+      designation: designation,
       schoolName: school,
       email: email,
       city: city,
