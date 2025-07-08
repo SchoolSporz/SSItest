@@ -563,6 +563,25 @@ const peReportingFrequencyData = getValueAndText('peReportingFrequency');
 const structuredCurriculumData = getValueAndText('structuredCurriculum');
 const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
 
+const getValueAndText = (id) => {
+  const el = document.getElementById(id);
+  return {
+    value: Number(el.value),
+    text: el.options[el.selectedIndex].text
+  };
+};
+
+const peSessionsData = getValueAndText('peSessions');
+const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
+const sectionsData = getValueAndText('sections');
+const sportsData = getValueAndText('sports');
+const studentFeedbackData = getValueAndText('studentFeedback');
+const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
+const peTeacherRatioData = getValueAndText('peTeacherRatio');
+const peReportingFrequencyData = getValueAndText('peReportingFrequency');
+const structuredCurriculumData = getValueAndText('structuredCurriculum');
+const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
+
 
 
     const calcBtn = document.getElementById('calcBtn');
