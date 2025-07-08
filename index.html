@@ -719,6 +719,28 @@ maintainAspectRatio: false,
         // Generate summaries
         generateSummaries(timeForSports, spaceForSports, child, facilitator, content);
 
+// Prepare data to send
+let postData = {
+  respondentName: name,
+  designation: designation,
+  schoolName: school,
+  city: city,
+  email: email,
+  contactNumber: contact,
+  peSessions: peSessions,
+  afterSchoolStudents: afterSchoolStudents,
+  sections: sections,
+  sports: sports,
+  studentFeedback: studentFeedback,
+  interSchoolParticipation: interSchoolParticipation,
+  peTeacherRatio: peTeacherRatio,
+  peReportingFrequency: peReportingFrequency,
+  structuredCurriculum: structuredCurriculum,
+  propsEquipmentRatio: propsEquipmentRatio,
+  overallScore: overallScore.toFixed(2)
+};
+
+
 // Convert your postData object into URL-encoded string
 let formBody = Object.keys(postData).map(key => 
   encodeURIComponent(key) + '=' + encodeURIComponent(postData[key])
