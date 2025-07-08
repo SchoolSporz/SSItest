@@ -555,16 +555,16 @@ return {
 
 }
 
-const peSessionsData = getValueAndText('peSessions');
-const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
-const sectionsData = getValueAndText('sections');
-const sportsData = getValueAndText('sports');
-const studentFeedbackData = getValueAndText('studentFeedback');
-const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
-const peTeacherRatioData = getValueAndText('peTeacherRatio');
-const peReportingFrequencyData = getValueAndText('peReportingFrequency');
-const structuredCurriculumData = getValueAndText('structuredCurriculum');
-const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
+const peSessions = Number(document.getElementById('peSessions').value);
+const afterSchoolStudents = Number(document.getElementById('afterSchoolStudents').value);
+const sections = Number(document.getElementById('sections').value);
+const sports = Number(document.getElementById('sports').value);
+const studentFeedback = Number(document.getElementById('studentFeedback').value);
+const interSchoolParticipation = Number(document.getElementById('interSchoolParticipation').value);
+const peTeacherRatio = Number(document.getElementById('peTeacherRatio').value);
+const peReportingFrequency = Number(document.getElementById('peReportingFrequency').value);
+const structuredCurriculum = Number(document.getElementById('structuredCurriculum').value);
+const propsEquipmentRatio = Number(document.getElementById('propsEquipmentRatio').value);
 
 
     const calcBtn = document.getElementById('calcBtn');
@@ -731,19 +731,20 @@ let postData = {
   email: email,
   contactNumber: contact,
 
-  peSessions: peSessionsData.text,
-  afterSchoolStudents: afterSchoolStudentsData.text,
-  sections: sectionsData.text,
-  sports: sportsData.text,
-  studentFeedback: studentFeedbackData.text,
-  interSchoolParticipation: interSchoolParticipationData.text,
-  peTeacherRatio: peTeacherRatioData.text,
-  peReportingFrequency: peReportingFrequencyData.text,
-  structuredCurriculum: structuredCurriculumData.text,
-  propsEquipmentRatio: propsEquipmentRatioData.text,
+  peSessions: peSessions,
+  afterSchoolStudents: afterSchoolStudents,
+  sections: sections,
+  sports: sports,
+  studentFeedback: studentFeedback,
+  interSchoolParticipation: interSchoolParticipation,
+  peTeacherRatio: peTeacherRatio,
+  peReportingFrequency: peReportingFrequency,
+  structuredCurriculum: structuredCurriculum,
+  propsEquipmentRatio: propsEquipmentRatio,
 
   overallScore: overallScore.toFixed(2)
 };
+
 
 
 // Convert your postData object into URL-encoded string
