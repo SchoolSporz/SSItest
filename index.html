@@ -482,17 +482,13 @@ a:hover {
 
        <canvas id="barChart"></canvas>
 
-<div style="text-align: center; margin-top: 30px;">
+<div id="connectQuestion" style="text-align: center; margin-top: 30px;">
   <p style="font-weight: 600; font-size: 16px; max-width: 600px; margin: 0 auto 20px;">
-    Would you like a member of our team to connect with you to explore strategies for enhancing your school's sports environment and improving its Sports Index score?
+    Would you like our team to connect with you to explore strategies for enhancing your school's sports environment?
   </p>
   <div style="display: inline-flex; gap: 15px;">
-    <button onclick="handleConnectResponse('Yes')" style="background-color: #28a745; color: white; padding: 8px 16px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
-      Yes
-    </button>
-    <button onclick="handleConnectResponse('No')" style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
-      No
-    </button>
+    <button onclick="submitConnectResponse('Yes')" style="background-color: #28a745; color: white; padding: 8px 16px; border: none; border-radius: 4px;">Yes</button>
+    <button onclick="submitConnectResponse('No')" style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 4px;">No</button>
   </div>
 </div>
 
