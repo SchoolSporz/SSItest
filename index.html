@@ -754,20 +754,12 @@ let formBody = Object.keys(postData).map(key =>
 
 fetch("https://script.google.com/macros/s/AKfycbz1TrYCZccmpiv1wAnvdTZGHy8VA5IopuMx71oa1xPW_so01ZZLwA6ohZ4vJS0EUymx/exec", {
   method: "POST",
-  body: formBody,
-  headers: { "Content-Type": "application/x-www-form-urlencoded" }
-})
-.then(response => {
-  if (response.ok) {
-    alert("Your response has been submitted to the sheet!");
-  } else {
-    alert("There was a problem submitting your response.");
-  }
-})
-.catch(error => {
-  console.error("Error:", error);
-  alert("An error occurred while submitting.");
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(postData)
 });
+
 
 // Send to Google Apps Script Web App
 fetch("https://script.google.com/macros/s/AKfycby-jP0qQt5F94TUcgSJAZlZ-sdWNyVNjx23yn2j47aFiP_W1KRfrOscHy92qk59C02-/exec", {
