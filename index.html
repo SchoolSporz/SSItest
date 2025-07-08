@@ -536,77 +536,7 @@ a:hover {
 <script>
     let barChart;
 
-	function validateInputs() {
-    const name = document.getElementById('respondentName').value.trim();
-    const designation = document.getElementById('designation').value.trim();
-    const school = document.getElementById('schoolName').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const contact = document.getElementById('contactNumber').value.trim();
-
-    const getValueAndText = (id) => {
-  const el = document.getElementById(id);
-  return {
-    value: Number(el.value),
-    text: el.options[el.selectedIndex].text
-  };
-};
-
-const peSessionsData = getValueAndText('peSessions');
-const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
-const sectionsData = getValueAndText('sections');
-const sportsData = getValueAndText('sports');
-const studentFeedbackData = getValueAndText('studentFeedback');
-const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
-const peTeacherRatioData = getValueAndText('peTeacherRatio');
-const peReportingFrequencyData = getValueAndText('peReportingFrequency');
-const structuredCurriculumData = getValueAndText('structuredCurriculum');
-const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
-
-const getValueAndText = (id) => {
-  const el = document.getElementById(id);
-  return {
-    value: Number(el.value),
-    text: el.options[el.selectedIndex].text
-  };
-};
-
-const peSessionsData = getValueAndText('peSessions');
-const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
-const sectionsData = getValueAndText('sections');
-const sportsData = getValueAndText('sports');
-const studentFeedbackData = getValueAndText('studentFeedback');
-const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
-const peTeacherRatioData = getValueAndText('peTeacherRatio');
-const peReportingFrequencyData = getValueAndText('peReportingFrequency');
-const structuredCurriculumData = getValueAndText('structuredCurriculum');
-const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
-
-
-
-    const calcBtn = document.getElementById('calcBtn');
-
-    if (
-        name && designation && school && city && email && contact &&
-        peSessions && afterSchoolStudents && sections && sports &&
-        studentFeedback && interSchoolParticipation && peTeacherRatio &&
-        peReportingFrequency && structuredCurriculum && propsEquipmentRatio
-    ) {
-        calcBtn.disabled = false;
-    } else {
-        calcBtn.disabled = true;
-    }
-}
-
-
-function calculateScore() {
-    const name = document.getElementById('respondentName').value.trim();
-    const designation = document.getElementById('designation').value.trim();
-    const school = document.getElementById('schoolName').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const contact = document.getElementById('contactNumber').value.trim();
-
+    // Common utility to get value and selected text
     const getValueAndText = (id) => {
         const el = document.getElementById(id);
         return {
@@ -615,266 +545,237 @@ function calculateScore() {
         };
     };
 
-    const peSessionsData = getValueAndText('peSessions');
-    const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
-    const sectionsData = getValueAndText('sections');
-    const sportsData = getValueAndText('sports');
-    const studentFeedbackData = getValueAndText('studentFeedback');
-    const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
-    const peTeacherRatioData = getValueAndText('peTeacherRatio');
-    const peReportingFrequencyData = getValueAndText('peReportingFrequency');
-    const structuredCurriculumData = getValueAndText('structuredCurriculum');
-    const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
+    function validateInputs() {
+        const name = document.getElementById('respondentName').value.trim();
+        const designation = document.getElementById('designation').value.trim();
+        const school = document.getElementById('schoolName').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const contact = document.getElementById('contactNumber').value.trim();
+        const calcBtn = document.getElementById('calcBtn');
 
-    // Validate again (optional)
-    if (
-        !name || !designation || !school || !city || !email || !contact ||
-        !peSessionsData.value || !afterSchoolStudentsData.value || !sectionsData.value ||
-        !sportsData.value || !studentFeedbackData.value || !interSchoolParticipationData.value ||
-        !peTeacherRatioData.value || !peReportingFrequencyData.value ||
-        !structuredCurriculumData.value || !propsEquipmentRatioData.value
-    ) {
-        alert("Please fill all fields before calculating score.");
-        return;
-    }
-
-    // Calculate scores
-    let timeForSports = (peSessionsData.value * 0.75 + afterSchoolStudentsData.value * 0.25) * 20;
-    let spaceForSports = (sectionsData.value * 0.75 + sportsData.value * 0.25) * 20;
-    let child = (studentFeedbackData.value * 0.5 + interSchoolParticipationData.value * 0.5) * 20;
-    let facilitator = (peTeacherRatioData.value * 0.5 + peReportingFrequencyData.value * 0.5) * 20;
-    let content = (structuredCurriculumData.value * 0.75 + propsEquipmentRatioData.value * 0.25) * 20;
-
-    let overallScore = (timeForSports + spaceForSports + child + facilitator + content) / 5;
-
-    document.getElementById('overallScore').innerText = `Overall Score: ${overallScore.toFixed(2)}`;
-
-        // Prepare data for radar chart
-        let labels = ["Time for Sports", "Space for Sports", "Child", "Facilitator", "Content"];
-        let scores = [timeForSports, spaceForSports, child, facilitator, content];
-
-        // Generate color based on scores
-       let backgroundColors = scores.map(score => {
-    if (score < 40) return 'rgba(255, 206, 86, 0.8)'; // Yellow
-    if (score > 80) return 'rgba(75, 192, 192, 0.8)'; // Green
-    return 'rgba(54, 162, 235, 0.8)'; // Blue
-});
-
-
-// Remove previous chart if it exists
-if (barChart) {
-    barChart.destroy();
-}
-
-// Create enhanced bar chart
-barChart = new Chart(document.getElementById('barChart'), {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'School Sports Index',
-            data: scores,
-            backgroundColor: backgroundColors,
-            borderColor: 'rgba(0, 0, 0, 0.8)',
-            borderWidth: 2,
-            borderRadius: 8,
-            barThickness: 40
-        }]
-    },
-    options: {
-	responsive: true,
-maintainAspectRatio: false,
-        animation: {
-            duration: 1000,
-            easing: 'easeOutBounce'
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: 'School Sports Index Overview',
-                font: {
-                    size: 18
-                },
-                color: '#222',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                }
-            },
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 100,
-                grid: {
-                    color: '#ddd'
-                },
-                ticks: {
-                    color: '#333',
-                    font: {
-                        size: 14
-                    }
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    color: '#333',
-                    font: {
-                        size: 14
-                    }
-                }
-            }
+        if (name && designation && school && city && email && contact) {
+            calcBtn.disabled = false;
+        } else {
+            calcBtn.disabled = true;
         }
     }
-});
 
+    function calculateScore() {
+        // Get basic info
+        const name = document.getElementById('respondentName').value.trim();
+        const designation = document.getElementById('designation').value.trim();
+        const school = document.getElementById('schoolName').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const contact = document.getElementById('contactNumber').value.trim();
 
-        // Clear previous summary before generating new summary
+        // Get dropdown values
+        const peSessionsData = getValueAndText('peSessions');
+        const afterSchoolStudentsData = getValueAndText('afterSchoolStudents');
+        const sectionsData = getValueAndText('sections');
+        const sportsData = getValueAndText('sports');
+        const studentFeedbackData = getValueAndText('studentFeedback');
+        const interSchoolParticipationData = getValueAndText('interSchoolParticipation');
+        const peTeacherRatioData = getValueAndText('peTeacherRatio');
+        const peReportingFrequencyData = getValueAndText('peReportingFrequency');
+        const structuredCurriculumData = getValueAndText('structuredCurriculum');
+        const propsEquipmentRatioData = getValueAndText('propsEquipmentRatio');
+
+        // Validate
+        if (
+            !name || !designation || !school || !city || !email || !contact ||
+            !peSessionsData.value || !afterSchoolStudentsData.value || !sectionsData.value ||
+            !sportsData.value || !studentFeedbackData.value || !interSchoolParticipationData.value ||
+            !peTeacherRatioData.value || !peReportingFrequencyData.value ||
+            !structuredCurriculumData.value || !propsEquipmentRatioData.value
+        ) {
+            alert("Please fill all fields before calculating score.");
+            return;
+        }
+
+        // Score Calculation
+        let timeForSports = (peSessionsData.value * 0.75 + afterSchoolStudentsData.value * 0.25) * 20;
+        let spaceForSports = (sectionsData.value * 0.75 + sportsData.value * 0.25) * 20;
+        let child = (studentFeedbackData.value * 0.5 + interSchoolParticipationData.value * 0.5) * 20;
+        let facilitator = (peTeacherRatioData.value * 0.5 + peReportingFrequencyData.value * 0.5) * 20;
+        let content = (structuredCurriculumData.value * 0.75 + propsEquipmentRatioData.value * 0.25) * 20;
+        let overallScore = (timeForSports + spaceForSports + child + facilitator + content) / 5;
+
+        document.getElementById('overallScore').innerText = `Overall Score: ${overallScore.toFixed(2)}`;
+
+        // Chart Data
+        const labels = ["Time for Sports", "Space for Sports", "Child", "Facilitator", "Content"];
+        const scores = [timeForSports, spaceForSports, child, facilitator, content];
+        const backgroundColors = scores.map(score => {
+            if (score < 40) return 'rgba(255, 206, 86, 0.8)'; // Yellow
+            if (score > 80) return 'rgba(75, 192, 192, 0.8)'; // Green
+            return 'rgba(54, 162, 235, 0.8)'; // Blue
+        });
+
+        // Destroy previous chart
+        if (barChart) barChart.destroy();
+
+        // Draw new chart
+        barChart = new Chart(document.getElementById('barChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'School Sports Index',
+                    data: scores,
+                    backgroundColor: backgroundColors,
+                    borderColor: 'rgba(0, 0, 0, 0.8)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barThickness: 40
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutBounce'
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'School Sports Index Overview',
+                        font: { size: 18 },
+                        color: '#222',
+                        padding: { top: 10, bottom: 30 }
+                    },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#ddd' },
+                        ticks: { color: '#333', font: { size: 14 } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#333', font: { size: 14 } }
+                    }
+                }
+            }
+        });
+
+        // Clear old summaries and generate new ones
         clearSummaries();
-
-        // Generate summaries
         generateSummaries(timeForSports, spaceForSports, child, facilitator, content);
 
-// Prepare data to send
- let postData = {
-        respondentName: name,
-        designation: designation,
-        schoolName: school,
-        city: city,
-        email: email,
-        contactNumber: contact,
+        // Prepare submission data
+        let postData = {
+            respondentName: name,
+            designation: designation,
+            schoolName: school,
+            city: city,
+            email: email,
+            contactNumber: contact,
+            peSessions: peSessionsData.text,
+            afterSchoolStudents: afterSchoolStudentsData.text,
+            sections: sectionsData.text,
+            sports: sportsData.text,
+            studentFeedback: studentFeedbackData.text,
+            interSchoolParticipation: interSchoolParticipationData.text,
+            peTeacherRatio: peTeacherRatioData.text,
+            peReportingFrequency: peReportingFrequencyData.text,
+            structuredCurriculum: structuredCurriculumData.text,
+            propsEquipmentRatio: propsEquipmentRatioData.text,
+            overallScore: overallScore.toFixed(2)
+        };
 
-        peSessions: peSessionsData.text,
-        afterSchoolStudents: afterSchoolStudentsData.text,
-        sections: sectionsData.text,
-        sports: sportsData.text,
-        studentFeedback: studentFeedbackData.text,
-        interSchoolParticipation: interSchoolParticipationData.text,
-        peTeacherRatio: peTeacherRatioData.text,
-        peReportingFrequency: peReportingFrequencyData.text,
-        structuredCurriculum: structuredCurriculumData.text,
-        propsEquipmentRatio: propsEquipmentRatioData.text,
+        let formBody = Object.keys(postData).map(key =>
+            encodeURIComponent(key) + '=' + encodeURIComponent(postData[key])
+        ).join('&');
 
-        overallScore: overallScore.toFixed(2)
-    };
-
-    // Convert to x-www-form-urlencoded format
-    let formBody = Object.keys(postData).map(key =>
-        encodeURIComponent(key) + '=' + encodeURIComponent(postData[key])
-    ).join('&');
-
-    // Send to Google Apps Script
-    fetch("https://script.google.com/macros/s/AKfycbwJ0rDWgk66C6vzJGXUK_jlq9LtIBS-Z9UtCImgEgMv_kC0CgJ5oSlkCUwMUVCooQVFaA/exec", {
-        method: "POST",
-        body: formBody,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    })
-    .then(response => {
-        if (response.ok) {
-            alert("Your response has been submitted to the sheet!");
-        } else {
-            alert("There was a problem submitting your response.");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("An error occurred while submitting.");
-    });
-}
+        fetch("https://script.google.com/macros/s/AKfycbwJ0rDWgk66C6vzJGXUK_jlq9LtIBS-Z9UtCImgEgMv_kC0CgJ5oSlkCUwMUVCooQVFaA/exec", {
+            method: "POST",
+            body: formBody,
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Your response has been submitted to the sheet!");
+            } else {
+                alert("There was a problem submitting your response.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred while submitting.");
+        });
+    }
 
     function clearSummaries() {
-        // Clear previous positive, neutral, and negative summaries
-        document.getElementById('summaryPositiveTimeForSports').innerText = '';
-        document.getElementById('summaryNeutralTimeForSports').innerText = '';
-        document.getElementById('summaryNegativeTimeForSports').innerText = '';
-
-        document.getElementById('summaryPositiveSpaceForSports').innerText = '';
-        document.getElementById('summaryNeutralSpaceForSports').innerText = '';
-        document.getElementById('summaryNegativeSpaceForSports').innerText = '';
-
-        document.getElementById('summaryPositiveChild').innerText = '';
-        document.getElementById('summaryNeutralChild').innerText = '';
-        document.getElementById('summaryNegativeChild').innerText = '';
-
-        document.getElementById('summaryPositiveFacilitator').innerText = '';
-        document.getElementById('summaryNeutralFacilitator').innerText = '';
-        document.getElementById('summaryNegativeFacilitator').innerText = '';
-
-        document.getElementById('summaryPositiveContent').innerText = '';
-        document.getElementById('summaryNeutralContent').innerText = '';
-        document.getElementById('summaryNegativeContent').innerText = '';
+        const ids = [
+            'summaryPositiveTimeForSports', 'summaryNeutralTimeForSports', 'summaryNegativeTimeForSports',
+            'summaryPositiveSpaceForSports', 'summaryNeutralSpaceForSports', 'summaryNegativeSpaceForSports',
+            'summaryPositiveChild', 'summaryNeutralChild', 'summaryNegativeChild',
+            'summaryPositiveFacilitator', 'summaryNeutralFacilitator', 'summaryNegativeFacilitator',
+            'summaryPositiveContent', 'summaryNeutralContent', 'summaryNegativeContent'
+        ];
+        ids.forEach(id => document.getElementById(id).innerText = '');
     }
 
     function generateSummaries(timeForSports, spaceForSports, child, facilitator, content) {
-    // Time for Sports
-    if (timeForSports < 40) {
-        document.getElementById('summaryNegativeTimeForSports').innerText = 
-            "The time allocated for sports can be improved to provide students with more regular opportunities for physical activity. Increasing PE periods and after-school activities is encouraged.";
-    } else if (timeForSports > 80) {
-        document.getElementById('summaryPositiveTimeForSports').innerText = 
-            "The time allocated for sports is excellent, offering students ample opportunities for regular activity. Maintaining this standard and exploring ways to further enrich the quality and variety of activities is encouraged.";
-    } else {
-        document.getElementById('summaryNeutralTimeForSports').innerText = 
-            "The current time for sports is adequate, though adding structured activities or extra sessions could further improve student engagement and participation.";
+        // Summary generator helpers
+        const writeSummary = (value, positiveId, neutralId, negativeId, positiveMsg, neutralMsg, negativeMsg) => {
+            if (value < 40) document.getElementById(negativeId).innerText = negativeMsg;
+            else if (value > 80) document.getElementById(positiveId).innerText = positiveMsg;
+            else document.getElementById(neutralId).innerText = neutralMsg;
+        };
+
+        // Each category
+        writeSummary(
+            timeForSports,
+            'summaryPositiveTimeForSports',
+            'summaryNeutralTimeForSports',
+            'summaryNegativeTimeForSports',
+            "The time allocated for sports is excellent...",
+            "The current time for sports is adequate...",
+            "The time allocated for sports can be improved..."
+        );
+        writeSummary(
+            spaceForSports,
+            'summaryPositiveSpaceForSports',
+            'summaryNeutralSpaceForSports',
+            'summaryNegativeSpaceForSports',
+            "The school provides excellent sports facilities...",
+            "The space for sports is acceptable...",
+            "The available space for sports can be enhanced..."
+        );
+        writeSummary(
+            child,
+            'summaryPositiveChild',
+            'summaryNeutralChild',
+            'summaryNegativeChild',
+            "Student participation and achievements are commendable...",
+            "Student participation is moderate...",
+            "Student participation and achievements can be strengthened..."
+        );
+        writeSummary(
+            facilitator,
+            'summaryPositiveFacilitator',
+            'summaryNeutralFacilitator',
+            'summaryNegativeFacilitator',
+            "The PE teacher-student ratio and reporting frequency are excellent...",
+            "The PE staffing and reporting systems are adequate...",
+            "The current PE teaching capacity and reporting systems can be improved..."
+        );
+        writeSummary(
+            content,
+            'summaryPositiveContent',
+            'summaryNeutralContent',
+            'summaryNegativeContent',
+            "The school’s sports program is well-structured...",
+            "The sports program structure and resources are fair...",
+            "The sports program can be made more effective..."
+        );
     }
-
-    // Space for Sports
-    if (spaceForSports < 40) {
-        document.getElementById('summaryNegativeSpaceForSports').innerText = 
-            "The available space for sports can be enhanced to support greater participation and activity variety. Exploring options to optimize or expand current spaces is recommended.";
-    } else if (spaceForSports > 80) {
-        document.getElementById('summaryPositiveSpaceForSports').innerText = 
-            "The school provides excellent sports facilities supporting diverse physical activities. Periodic reviews to identify areas for further optimization or diversification can help sustain long-term engagement.";
-    } else {
-        document.getElementById('summaryNeutralSpaceForSports').innerText = 
-            "The space for sports is acceptable, but improving accessibility or diversifying activity zones may enhance the sports experience.";
-    }
-
-    // Child Participation & Achievement
-    if (child < 40) {
-        document.getElementById('summaryNegativeChild').innerText = 
-            "Student participation and achievements in sports can be strengthened by creating more opportunities within the school and encouraging inter-school participation.";
-    } else if (child > 80) {
-        document.getElementById('summaryPositiveChild').innerText = 
-            "Student participation and achievements in sports are commendable, both internally and externally. Continued focus on providing new challenges and advanced opportunities will help maintain momentum and nurture future talent.";
-    } else {
-        document.getElementById('summaryNeutralChild').innerText = 
-            "Student participation is moderate, with scope to further increase engagement and competitive exposure. Offering additional events or structured opportunities may help.";
-    }
-
-    // Facilitator System & Support
-if (facilitator < 40) {
-    document.getElementById('summaryNegativeFacilitator').innerText = 
-        "The current PE teaching capacity and reporting systems can be improved. Establishing a structured and frequent reporting process will help enhance program delivery and accountability.";
-} else if (facilitator > 80) {
-    document.getElementById('summaryPositiveFacilitator').innerText = 
-        "The PE teacher-student ratio and reporting frequency are excellent, ensuring effective oversight and continuous program improvement. Continue regular monitoring and feedback mechanisms to sustain quality.";
-} else {
-    document.getElementById('summaryNeutralFacilitator').innerText = 
-        "The PE staffing and reporting systems are adequate, though moving towards more frequent reporting and review mechanisms could help further strengthen program management.";
-}
-
-
-    // Sports Program Structure & Resources
-    if (content < 40) {
-        document.getElementById('summaryNegativeContent').innerText = 
-            "The sports program can be made more effective by developing a clear, age-appropriate curriculum and improving access to quality equipment.";
-    } else if (content > 80) {
-        document.getElementById('summaryPositiveContent').innerText = 
-            "The school’s sports program is well-structured and resourced, providing a comprehensive experience for students. Periodic curriculum reviews and resource updates are recommended to align with evolving student needs and best practices.";
-    } else {
-        document.getElementById('summaryNeutralContent').innerText = 
-            "The sports program structure and resources are fair, but minor improvements in curriculum planning and resource allocation could improve effectiveness.";
-    }
-}
-
-
 </script>
 
 </body>
