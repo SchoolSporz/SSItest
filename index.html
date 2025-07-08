@@ -581,16 +581,16 @@ a:hover {
     const email = document.getElementById('email').value.trim();
     const contact = document.getElementById('contactNumber').value.trim();
 
-    const peSessions = document.getElementById('peSessions').value;
-    const afterSchoolStudents = document.getElementById('afterSchoolStudents').value;
-    const sections = document.getElementById('sections').value;
-    const sports = document.getElementById('sports').value;
-    const studentFeedback = document.getElementById('studentFeedback').value;
-    const interSchoolParticipation = document.getElementById('interSchoolParticipation').value;
-    const peTeacherRatio = document.getElementById('peTeacherRatio').value;
-    const peReportingFrequency = document.getElementById('peReportingFrequency').value;
-    const structuredCurriculum = document.getElementById('structuredCurriculum').value;
-    const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').value;
+    const peSessions = document.getElementById('peSessions').options[document.getElementById('peSessions').selectedIndex].text;
+const afterSchoolStudents = document.getElementById('afterSchoolStudents').options[document.getElementById('afterSchoolStudents').selectedIndex].text;
+const sections = document.getElementById('sections').options[document.getElementById('sections').selectedIndex].text;
+const sports = document.getElementById('sports').options[document.getElementById('sports').selectedIndex].text;
+const studentFeedback = document.getElementById('studentFeedback').options[document.getElementById('studentFeedback').selectedIndex].text;
+const interSchoolParticipation = document.getElementById('interSchoolParticipation').options[document.getElementById('interSchoolParticipation').selectedIndex].text;
+const peTeacherRatio = document.getElementById('peTeacherRatio').options[document.getElementById('peTeacherRatio').selectedIndex].text;
+const peReportingFrequency = document.getElementById('peReportingFrequency').options[document.getElementById('peReportingFrequency').selectedIndex].text;
+const structuredCurriculum = document.getElementById('structuredCurriculum').options[document.getElementById('structuredCurriculum').selectedIndex].text;
+const propsEquipmentRatio = document.getElementById('propsEquipmentRatio').options[document.getElementById('propsEquipmentRatio').selectedIndex].text;
 
     // If any field is empty — alert user
     if (
